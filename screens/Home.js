@@ -11,22 +11,27 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 const Tab = createMaterialBottomTabNavigator();
 
 export default class Home extends Component {
+  
   render() {
     const { params } = this.props.navigation.state;
     const emaila = params ? params.emaila : null;
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Text>otherParam: {JSON.stringify(emaila)}</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() => this.props.navigation.navigate('Details')}
-      />
-      <Button
-        title="Go back"
-        onPress={() => this.props.navigation.goBack()}
-      />
-    </View>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name={JSON.stringify(emaila)} component={HomeMain}
+          initialParams={{emaila: emaila}}
+          options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="home" color={color} size={26} />
+                        ),
+              }}/>
+          <Tab.Screen name="Search" component={Search} options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="magnify" color={color} size={26} />
+                        ),
+          }}/>
+        </Tab.Navigator>
+      </NavigationContainer>
     );
   }
 }

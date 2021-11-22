@@ -5,21 +5,22 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 const Drawer = createDrawerNavigator()
-function HomeMain() {
+function HomeMain({route}) {
+  let emaila = route.params.emaila;
     return (
         <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name={JSON.stringify(emaila)} component={HomeScreen}
+          initialParams={{emaila: emaila}}/>
         </Drawer.Navigator>
     )
 }
 
-function HomeScreen({ navigation }) {
-    const { params } = this.props.navigation.state;
-    const emaila = params ? params.emaila : null;
+function HomeScreen({route}) {
+  let emaila = route.params.emaila;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
-        <Text>otherParam: {JSON.stringify(emaila)}</Text>
+        <Text style={styles.title}>{`Details (from ${emaila})`}</Text>
         <Button
           title="Go to Details... again"
           onPress={() => this.props.navigation.navigate('Details')}
